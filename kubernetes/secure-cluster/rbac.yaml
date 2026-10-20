@@ -1,0 +1,89 @@
+# Namespace-scoped, read-only Role for the app team / CI deployer to inspect workloads.
+# No secrets access, no exec, no wildcard verbs or resources.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secure-app-viewer
+  namespace: secure-app
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "configmaps", "events"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: secure-app-viewer
+  namespace: secure-app
+subjects:
+  # Bind to an IdP group (Entra ID / IAM Identity Center), never to individual users.
+  - kind: Group
+    name: secure-app-developers
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: secure-app-viewer
+  apiGroup: rbac.authorization.k8s.io
+---
+# Deployer role used by the CD pipeline: may roll out the app, nothing else.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secure-app-deployer
+  namespace: secure-app
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["secure-app"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["services", "configmaps"]
+    verbs: ["get", "list", "create", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: secure-app-deployer
+  namespace: secure-app
+subjects:
+  - kind: Group
+    name: secure-app-cd-pipeline
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: secure-app-deployer
+  apiGroup: rbac.authorization.k8s.io
+---
+# Incident-response role: lets the IR automation label/quarantine pods and read logs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: incident-responder
+  namespace: secure-app
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "patch"]
+  - apiGroups: [""]
+    resources: ["pods/log", "events"]
+    verbs: ["get", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["get", "list", "create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: incident-responder
+  namespace: secure-app
+subjects:
+  - kind: Group
+    name: security-incident-responders
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: incident-responder
+  apiGroup: rbac.authorization.k8s.io

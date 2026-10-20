@@ -1,0 +1,17 @@
+# Internal-only service. External exposure goes through the ingress controller (TLS + WAF).
+apiVersion: v1
+kind: Service
+metadata:
+  name: secure-app
+  namespace: secure-app
+  labels:
+    app.kubernetes.io/name: secure-app
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: secure-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

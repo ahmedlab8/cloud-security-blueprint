@@ -1,0 +1,21 @@
+# Cluster-wide Pod Security Admission defaults (self-managed control planes / kind).
+# Pass to kube-apiserver with --admission-control-config-file. Managed clusters (EKS/AKS)
+# use the per-namespace labels in namespaces-pss.yaml instead.
+apiVersion: apiserver.config.k8s.io/v1
+kind: AdmissionConfiguration
+plugins:
+  - name: PodSecurity
+    configuration:
+      apiVersion: pod-security.admission.config.k8s.io/v1
+      kind: PodSecurityConfiguration
+      defaults:
+        enforce: restricted
+        enforce-version: latest
+        audit: restricted
+        audit-version: latest
+        warn: restricted
+        warn-version: latest
+      exemptions:
+        usernames: []
+        runtimeClasses: []
+        namespaces: ["kube-system", "falco"]

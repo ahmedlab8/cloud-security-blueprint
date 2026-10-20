@@ -1,0 +1,22 @@
+# Egress to cloud provider APIs (STS / Secrets Manager / Key Vault) over HTTPS only,
+# blocking the node metadata endpoint (169.254.169.254) to stop credential theft.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-https-egress-no-imds
+  namespace: secure-app
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: secure-app
+  policyTypes: ["Egress"]
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 169.254.169.254/32
+              - 169.254.170.2/32
+      ports:
+        - protocol: TCP
+          port: 443

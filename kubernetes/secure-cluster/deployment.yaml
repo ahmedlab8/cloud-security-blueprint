@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure-app
+  namespace: secure-app
+  labels:
+    app.kubernetes.io/name: secure-app
+    app.kubernetes.io/part-of: cloud-security-blueprint
+  annotations:
+    # Image digest is pinned at deploy time by CI (kustomize edit set image ...@sha256:...).
+    checkov.io/skip1: CKV_K8S_43=Digest is injected by the release pipeline; source manifest carries an immutable semver tag.
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: secure-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: secure-app
+        app.kubernetes.io/part-of: cloud-security-blueprint
+        azure.workload.identity/use: "true"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: /metrics
+    spec:
+      serviceAccountName: secure-app
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: secure-app
+      containers:
+        - name: secure-app
+          image: ghcr.io/ahmedlab8/secure-app:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DEMO_PASSWORD_FILE
+              value: /mnt/secrets/demo-password
+            - name: LOG_LEVEL
+              value: INFO
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+              ephemeral-storage: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+              ephemeral-storage: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: app-secrets
+              mountPath: /mnt/secrets
+              readOnly: true
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 32Mi
+        # Secrets come from the cloud KMS-backed store via the Secrets Store CSI driver
+        # (see secretproviderclass-*.yaml). Nothing is stored in Git or in etcd in plaintext.
+        - name: app-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secure-app-secrets
