@@ -1,0 +1,52 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+backend.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Incident-response evidence (may contain sensitive data)
+evidence/
+*-evidence.tar.gz
+
+# Scanner scratch output (curated reports live in security-tools/reports/)
+/reports/
+/zap/
+results.sarif
+*.sarif
+
+# Secrets & local env
+.env
+.env.*
+*.pem
+*.key
+kubeconfig
+*.kubeconfig
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

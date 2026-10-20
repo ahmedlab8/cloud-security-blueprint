@@ -1,0 +1,10 @@
+# Default owner for everything
+*                         @ahmedlab8
+
+# Security-critical paths (require explicit review)
+/terraform/               @ahmedlab8
+/policies/                @ahmedlab8
+/kubernetes/              @ahmedlab8
+/.github/workflows/       @ahmedlab8
+/incident-response/       @ahmedlab8
+/SECURITY.md              @ahmedlab8

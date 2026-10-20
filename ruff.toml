@@ -1,0 +1,19 @@
+target-version = "py311"
+line-length = 140
+extend-exclude = ["security-tools/examples"]
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "RUF", "PLW", "EXE"]
+ignore = [
+  "S603", # subprocess with argv lists is intentional (no shell); inputs are validated
+  "S607", # kubectl is resolved from PATH by design
+  "E501", # long PromQL / payload literals are clearer on one line
+]
+
+[lint.per-file-ignores]
+"**/tests/*.py" = ["S101", "S105", "S106", "E402"]
+"app/src/gunicorn.conf.py" = ["E402"]
+"monitoring/grafana/build_dashboards.py" = ["E501"]
+
+[format]
+quote-style = "double"
