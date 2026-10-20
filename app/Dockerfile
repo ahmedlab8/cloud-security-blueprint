@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------
 # Build stage: install pinned deps into an isolated target dir.
 # ---------------------------------------------------------------------------
-FROM python:3.13-slim-trixie AS build
+FROM python:3.15-slim-trixie AS build
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 WORKDIR /build
 COPY requirements.txt .
