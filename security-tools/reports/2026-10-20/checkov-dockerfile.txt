@@ -1,0 +1,5 @@
+dockerfile scan results:
+
+Passed checks: 36, Failed checks: 0, Skipped checks: 0
+
+

@@ -1,0 +1,908 @@
+{
+ "check_type": "terraform",
+ "summary": {
+  "passed": 11,
+  "failed": 35,
+  "skipped": 0,
+  "parsing_errors": 0,
+  "resource_count": 7,
+  "checkov_version": "3.3.30"
+ },
+ "failed_checks": [
+  {
+   "check_id": "CKV_AWS_25",
+   "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-2",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "ingress/[0]/from_port",
+     "ingress/[0]/to_port",
+     "ingress/[0]/cidr_blocks",
+     "ingress/[0]/ipv6_cidr_blocks"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_260",
+   "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-aws-security-groups-do-not-allow-ingress-from-00000-to-port-80",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "ingress/[0]/from_port",
+     "ingress/[0]/to_port",
+     "ingress/[0]/cidr_blocks",
+     "ingress/[0]/ipv6_cidr_blocks"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_382",
+   "check_name": "Ensure no security groups allow egress from 0.0.0.0:0 to port -1",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/bc-aws-382",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "egress/[0]/from_port",
+     "egress/[0]/to_port",
+     "egress/[0]/cidr_blocks",
+     "egress/[0]/ipv6_cidr_blocks"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_23",
+   "check_name": "Ensure every security group and rule has a description",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-31",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "description",
+     "egress/[0]",
+     "ingress/[0]"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_24",
+   "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-1-port-security",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "ingress/[0]/from_port",
+     "ingress/[0]/to_port",
+     "ingress/[0]/cidr_blocks",
+     "ingress/[0]/ipv6_cidr_blocks"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_288",
+   "check_name": "Ensure IAM policies does not allow data exfiltration",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-288",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_290",
+   "check_name": "Ensure IAM policies does not allow write access without constraints",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-290",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_287",
+   "check_name": "Ensure IAM policies does not allow credentials exposure",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-287",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_286",
+   "check_name": "Ensure IAM policies does not allow privilege escalation",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-286",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_289",
+   "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-289",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_63",
+   "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's actions",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/iam-48",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy",
+     "inline_policy"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_62",
+   "check_name": "Ensure IAM policies that allow full \"*-*\" administrative privileges are not created",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-iam-45",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy",
+     "inline_policy"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_355",
+   "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-355",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "policy/Statement/[0]/Action"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_58",
+   "check_name": "Ensure EKS Cluster has Secrets Encryption Enabled",
+   "resource": "aws_eks_cluster.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    67,
+    75
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-3",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "encryption_config/[0]/resources"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_39",
+   "check_name": "Ensure Amazon EKS public endpoint disabled",
+   "resource": "aws_eks_cluster.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    67,
+    75
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-2",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "vpc_config/[0]/endpoint_public_access"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_38",
+   "check_name": "Ensure Amazon EKS public endpoint not accessible to 0.0.0.0/0",
+   "resource": "aws_eks_cluster.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    67,
+    75
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-1",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": []
+   }
+  },
+  {
+   "check_id": "CKV_AWS_37",
+   "check_name": "Ensure Amazon EKS control plane logging is enabled for all log types",
+   "resource": "aws_eks_cluster.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    67,
+    75
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-4",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "enabled_cluster_log_types"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_135",
+   "check_name": "Ensure that EC2 is EBS optimized",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-ec2-is-ebs-optimized",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "ebs_optimized"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_126",
+   "check_name": "Ensure that detailed monitoring is enabled for EC2 instances",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "monitoring"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_8",
+   "check_name": "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/general-13",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "root_block_device",
+     "ebs_block_device"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_88",
+   "check_name": "EC2 instance should not have public IP.",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/public-policies/public-12",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "associate_public_ip_address"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_79",
+   "check_name": "Ensure Instance Metadata Service Version 1 is not enabled",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/bc-aws-general-31",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "metadata_options/[0]/http_tokens"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_7",
+   "check_name": "Ensure rotation for customer created CMKs is enabled",
+   "resource": "aws_kms_key.no_rotation",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    89,
+    91
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/logging-8",
+   "check_result": {
+    "result": "FAILED",
+    "evaluated_keys": [
+     "enable_key_rotation"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_6",
+   "check_name": "Ensure that S3 bucket has a Public Access block",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "block_public_policy",
+     "block_public_acls"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_41",
+   "check_name": "Ensure an IAM role is attached to EC2 instance",
+   "resource": "aws_instance.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    78,
+    86
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/ensure-an-iam-role-is-attached-to-ec2-instance",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_instance": {
+      "insecure": {
+       "__end_line__": 86,
+       "__start_line__": 78,
+       "ami": [
+        "ami-00000000000000000"
+       ],
+       "associate_public_ip_address": [
+        true
+       ],
+       "instance_type": [
+        "t3.micro"
+       ],
+       "root_block_device": [
+        {
+         "encrypted": [
+          false
+         ]
+        }
+       ],
+       "__address__": "aws_instance.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "iam_instance_profile"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_5",
+   "check_name": "Ensure that Security Groups are attached to another resource",
+   "resource": "aws_security_group.wide_open",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    34,
+    51
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_security_group": {
+      "wide_open": {
+       "__end_line__": 51,
+       "__start_line__": 34,
+       "description": [
+        "Allows everything"
+       ],
+       "egress": [
+        {
+         "cidr_blocks": [
+          [
+           "0.0.0.0/0"
+          ]
+         ],
+         "from_port": [
+          0
+         ],
+         "protocol": [
+          "-1"
+         ],
+         "to_port": [
+          0
+         ]
+        }
+       ],
+       "ingress": [
+        {
+         "cidr_blocks": [
+          [
+           "0.0.0.0/0"
+          ]
+         ],
+         "from_port": [
+          0
+         ],
+         "protocol": [
+          "tcp"
+         ],
+         "to_port": [
+          65535
+         ]
+        }
+       ],
+       "name": [
+        "wide-open"
+       ],
+       "__address__": "aws_security_group.wide_open",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "networking"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_62",
+   "check_name": "Ensure S3 buckets should have event notifications enabled",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-62",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_64",
+   "check_name": "Ensure KMS key Policy is defined",
+   "resource": "aws_kms_key.no_rotation",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    89,
+    91
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-2-64",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_kms_key": {
+      "no_rotation": {
+       "__end_line__": 91,
+       "__start_line__": 89,
+       "description": [
+        "no rotation"
+       ],
+       "__address__": "aws_kms_key.no_rotation",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "policy"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_18",
+   "check_name": "Ensure the S3 bucket has access logging enabled",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-13-enable-logging",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "logging"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_21",
+   "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-16-enable-versioning",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "versioning_configuration/status",
+     "versioning/enabled"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_20",
+   "check_name": "S3 Bucket has an ACL defined which allows public READ access.",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-1-acl-read-permissions-everyone",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "acl",
+     "access_control_policy/grant/*/grantee/uri",
+     "access_control_policy",
+     "access_control_policy/grant"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_144",
+   "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-bucket-has-cross-region-replication-enabled",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "replication_configuration/rules/*/status",
+     "rule/*/status"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "check_name": "Ensure AWS IAM policy does not allow full IAM privileges",
+   "resource": "aws_iam_policy.admin",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    54,
+    64
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-2-40",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_iam_policy": {
+      "admin": {
+       "__end_line__": 64,
+       "__start_line__": 54,
+       "name": [
+        "too-much-power"
+       ],
+       "policy": [
+        {
+         "Version": "2012-10-17",
+         "Statement": [
+          {
+           "Effect": "Allow",
+           "Action": "*",
+           "Resource": "*"
+          }
+         ]
+        }
+       ],
+       "__address__": "aws_iam_policy.admin",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "inline_policy/Statement[?(@/Effect == Allow)]/Action[*]",
+     "policy/Statement[?(@/Effect == Allow)]/Action[*]",
+     "statement[?(@/effect == Allow)]/actions[*]"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_61",
+   "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-61",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "lifecycle_rule"
+    ]
+   }
+  },
+  {
+   "check_id": "CKV_AWS_145",
+   "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+   "resource": "aws_s3_bucket.insecure",
+   "file_path": "/main.tf",
+   "file_line_range": [
+    24,
+    26
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-buckets-are-encrypted-with-kms-by-default",
+   "check_result": {
+    "result": "FAILED",
+    "entity": {
+     "aws_s3_bucket": {
+      "insecure": {
+       "__end_line__": 26,
+       "__start_line__": 24,
+       "bucket": [
+        "example-insecure-bucket-do-not-deploy"
+       ],
+       "__address__": "aws_s3_bucket.insecure",
+       "__provider_address__": "aws.default"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+     "rule/apply_server_side_encryption_by_default/sse_algorithm"
+    ]
+   }
+  }
+ ],
+ "skipped_checks": [],
+ "passed_checks": [
+  {
+   "check_id": "CKV_AWS_41",
+   "resource": "aws.default"
+  },
+  {
+   "check_id": "CKV_AWS_93",
+   "resource": "aws_s3_bucket.insecure"
+  },
+  {
+   "check_id": "CKV_AWS_375",
+   "resource": "aws_s3_bucket_acl.insecure"
+  },
+  {
+   "check_id": "CKV_AWS_277",
+   "resource": "aws_security_group.wide_open"
+  },
+  {
+   "check_id": "CKV_AWS_339",
+   "resource": "aws_eks_cluster.insecure"
+  },
+  {
+   "check_id": "CKV_AWS_46",
+   "resource": "aws_instance.insecure"
+  },
+  {
+   "check_id": "CKV_AWS_33",
+   "resource": "aws_kms_key.no_rotation"
+  },
+  {
+   "check_id": "CKV_AWS_227",
+   "resource": "aws_kms_key.no_rotation"
+  },
+  {
+   "check_id": "CKV_AWS_57",
+   "resource": "aws_s3_bucket.insecure"
+  },
+  {
+   "check_id": "CKV2_AWS_43",
+   "resource": "aws_s3_bucket_acl.insecure"
+  },
+  {
+   "check_id": "CKV_AWS_19",
+   "resource": "aws_s3_bucket.insecure"
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+
+Report Summary
+
+┌─────────────────────────────────────────────────────────────────────┬────────────┬───────────────────┐
+│                               Target                                │    Type    │ Misconfigurations │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ app/Dockerfile                                                      │ dockerfile │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/allow-cloud-apis-egress.yaml            │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/allow-dns.yaml                          │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/allow-ingress-controller.yaml           │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/allow-prometheus.yaml                   │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/default-deny.yaml                       │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/network-policies/quarantine.yaml                         │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/pod-security/namespaces-pss.yaml                         │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/deployment.yaml                           │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/namespace.yaml                            │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/quotas.yaml                               │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/rbac.yaml                                 │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/secretproviderclass-aws.yaml              │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/secretproviderclass-azure.yaml            │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/service.yaml                              │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ kubernetes/secure-cluster/serviceaccount.yaml                       │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ policies/opa/gatekeeper/templates/k8sblockprivilegedcontainers.yaml │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ policies/opa/gatekeeper/templates/k8sblockpublicloadbalancer.yaml   │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ policies/opa/gatekeeper/templates/k8sblockrootcontainers.yaml       │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ policies/opa/gatekeeper/templates/k8sdisallowlatesttag.yaml         │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ policies/opa/gatekeeper/templates/k8srequireresourcelimits.yaml     │ kubernetes │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ terraform/aws                                                       │ terraform  │         0         │
+├─────────────────────────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ terraform/azure                                                     │ terraform  │         0         │
+└─────────────────────────────────────────────────────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+

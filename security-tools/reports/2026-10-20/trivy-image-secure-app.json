@@ -1,0 +1,1642 @@
+{
+ "ArtifactName": "secure-app:local (built from app/Dockerfile, scanned from docker save tarball)",
+ "CreatedAt": "2026-10-20T11:50:42.383564576-05:00",
+ "OS": {
+  "Family": "debian",
+  "Name": "13.7"
+ },
+ "ImageID": "sha256:c8ed9c5e0710db0ca64d51fa4a2bbc4f6bebd543e6ba8fc5b564ce3fffdda3b1",
+ "Results": [
+  {
+   "Target": "img.tar (debian 13.7)",
+   "Type": "debian",
+   "Vulnerabilities": [
+    {
+     "VulnerabilityID": "CVE-2026-102010",
+     "PkgName": "gcc-14-base",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-102010"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95619",
+     "PkgName": "gcc-14-base",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc: libstdc++ integer overflow in `new` operator",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95619"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-42250",
+     "PkgName": "libbz2-1.0",
+     "InstalledVersion": "1.0.8-6",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "bzip2: bzip2: Denial of Service in bzip2recover via a specially crafted file",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-42250"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18374",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Heap buffer overflow via attacker-controlled fopen mode string",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18374"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19499",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Buffer Overflow in strfmon right-justification padding",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19499"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19542",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Fix out-of-bounds array write in tdelete",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19542"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-5435",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Out-of-bounds write via TSIG record processing",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-5435"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6238",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Application crash or uninitialized memory read via crafted DNS response",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6238"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6368",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Process abort due to invalid memory in wordexp",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6368"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6791",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Glibc: Denial of Service via stack exhaustion during tilde expansion",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6791"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-77117",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Non-progress DoS in SHIFT_JISX0213 -&gt",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-77117"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-80489",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Non-progress DoS in EUC_JISX0213 -> UCS-4 conversion state",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-80489"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-8674",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc DNS stub resolver: Denial of Service via long search domain in configuration",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-8674"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-86805",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Privilege escalation and arbitrary code execution via TOCTOU race condition in dynamic loader",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-86805"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-89092",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: nscd stack overflow leads to degraded DNS resolution",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-89092"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95818",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Local attacker can cause denial of service and information disclosure via stack-based buffer overflow.",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95818"
+    },
+    {
+     "VulnerabilityID": "CVE-2010-4756",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2010-4756"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-20796",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-20796"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010022",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: stack guard protection bypass",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010022"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010023",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: running ldd on malicious ELF leads to code execution because of wrong size computation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010023"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010024",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: ASLR bypass using cache of thread stack and heap",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010024"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010025",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: information disclosure of heap addresses of pthread_created thread",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010025"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-9192",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-9192"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-97399",
+     "PkgName": "libc-bin",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: glibc: Denial of Service via out-of-bounds read in strncasecmp",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-97399"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18374",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Heap buffer overflow via attacker-controlled fopen mode string",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18374"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19499",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Buffer Overflow in strfmon right-justification padding",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19499"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19542",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Fix out-of-bounds array write in tdelete",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19542"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-5435",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Out-of-bounds write via TSIG record processing",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-5435"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6238",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Application crash or uninitialized memory read via crafted DNS response",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6238"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6368",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Process abort due to invalid memory in wordexp",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6368"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-6791",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Glibc: Denial of Service via stack exhaustion during tilde expansion",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-6791"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-77117",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Non-progress DoS in SHIFT_JISX0213 -&gt",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-77117"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-80489",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: Non-progress DoS in EUC_JISX0213 -> UCS-4 conversion state",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-80489"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-8674",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc DNS stub resolver: Denial of Service via long search domain in configuration",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-8674"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-86805",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Privilege escalation and arbitrary code execution via TOCTOU race condition in dynamic loader",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-86805"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-89092",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: nscd stack overflow leads to degraded DNS resolution",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-89092"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95818",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "glibc: glibc: Local attacker can cause denial of service and information disclosure via stack-based buffer overflow.",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95818"
+    },
+    {
+     "VulnerabilityID": "CVE-2010-4756",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2010-4756"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-20796",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-20796"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010022",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: stack guard protection bypass",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010022"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010023",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: running ldd on malicious ELF leads to code execution because of wrong size computation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010023"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010024",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: ASLR bypass using cache of thread stack and heap",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010024"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-1010025",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: information disclosure of heap addresses of pthread_created thread",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-1010025"
+    },
+    {
+     "VulnerabilityID": "CVE-2019-9192",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2019-9192"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-97399",
+     "PkgName": "libc6",
+     "InstalledVersion": "2.41-12+deb13u4",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "glibc: glibc: Denial of Service via out-of-bounds read in strncasecmp",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-97399"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-66382",
+     "PkgName": "libexpat1",
+     "InstalledVersion": "2.9.0-1~deb13u1",
+     "FixedVersion": null,
+     "Status": "fix_deferred",
+     "Severity": "MEDIUM",
+     "Title": "libexpat: libexpat: Denial of service via crafted file processing",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-66382"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-102010",
+     "PkgName": "libgcc-s1",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-102010"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95619",
+     "PkgName": "libgcc-s1",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc: libstdc++ integer overflow in `new` operator",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95619"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-102010",
+     "PkgName": "libgomp1",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-102010"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95619",
+     "PkgName": "libgomp1",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc: libstdc++ integer overflow in `new` operator",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95619"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107708",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107708"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107778",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via crafted forwarded credentials",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107778"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-5709",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-5709"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26458",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26458"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26461",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26461"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-11850",
+     "PkgName": "libgssapi-krb5-2",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-11850"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107708",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107708"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107778",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via crafted forwarded credentials",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107778"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-5709",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-5709"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26458",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26458"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26461",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26461"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-11850",
+     "PkgName": "libk5crypto3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-11850"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107708",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107708"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107778",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via crafted forwarded credentials",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107778"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-5709",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-5709"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26458",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26458"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26461",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26461"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-11850",
+     "PkgName": "libkrb5-3",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-11850"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107708",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107708"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-107778",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "krb5: krb5: Denial of Service via crafted forwarded credentials",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107778"
+    },
+    {
+     "VulnerabilityID": "CVE-2018-5709",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2018-5709"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26458",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26458"
+    },
+    {
+     "VulnerabilityID": "CVE-2024-26461",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26461"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-11850",
+     "PkgName": "libkrb5support0",
+     "InstalledVersion": "1.21.3-5+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-11850"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-69720",
+     "PkgName": "libncursesw6",
+     "InstalledVersion": "6.5+20250216-2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "ncurses: ncurses: Buffer overflow vulnerability may lead to arbitrary code execution.",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-69720"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-6141",
+     "PkgName": "libncursesw6",
+     "InstalledVersion": "6.5+20250216-2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "gnu-ncurses: ncurses Stack Buffer Overflow",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-6141"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15308",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python: CPU Denial of Service in HTML parser via repeated unterminated markup declarations",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15308"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19445",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Use-after-free of a server-side SSLContext when sni_callback switches contexts",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19445"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19553",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: python: Certificate verification bypass via missing server_hostname validation in SSLContext.wrap_bio()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19553"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-7210",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python/Expat: Denial of Service via crafted XML document",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-7210"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-82049",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python tarfile module: File modification and content disclosure via crafted archives",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-82049"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-12781",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: base64.b64decode() always accepts \"+/\" characters, despite setting altchars",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-12781"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15366",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: IMAP command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15366"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15367",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: POP3 command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15367"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12345",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: python: Arbitrary file deletion via race condition during temporary directory cleanup",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12345"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15310",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Denial of Service via crafted zip file memory pre-allocation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15310"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15806",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Information disclosure due to incorrect URL scheme matching",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15806"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-17084",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python stringprep module: Incorrect domain name processing breaks IDNA interoperability",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-17084"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19672",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Directory traversal allows creation of empty directories outside extraction destination",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19672"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-87910",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Security filter bypass allows arbitrary file write",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-87910"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12003",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Privilege escalation due to insecure VPATH handling in Windows legacy installers",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12003"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18503",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Denial of Service via super-linear regular expression work in csv.Sniffer.sniff()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18503"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-3479",
+     "PkgName": "libpython3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python pkgutil.get_data(): Path Traversal via improper resource argument validation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-3479"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15308",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python: CPU Denial of Service in HTML parser via repeated unterminated markup declarations",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15308"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19445",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Use-after-free of a server-side SSLContext when sni_callback switches contexts",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19445"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19553",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: python: Certificate verification bypass via missing server_hostname validation in SSLContext.wrap_bio()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19553"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-7210",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python/Expat: Denial of Service via crafted XML document",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-7210"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-82049",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python tarfile module: File modification and content disclosure via crafted archives",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-82049"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-12781",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: base64.b64decode() always accepts \"+/\" characters, despite setting altchars",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-12781"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15366",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: IMAP command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15366"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15367",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: POP3 command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15367"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12345",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: python: Arbitrary file deletion via race condition during temporary directory cleanup",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12345"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15310",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Denial of Service via crafted zip file memory pre-allocation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15310"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15806",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Information disclosure due to incorrect URL scheme matching",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15806"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-17084",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python stringprep module: Incorrect domain name processing breaks IDNA interoperability",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-17084"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19672",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Directory traversal allows creation of empty directories outside extraction destination",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19672"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-87910",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Security filter bypass allows arbitrary file write",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-87910"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12003",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Privilege escalation due to insecure VPATH handling in Windows legacy installers",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12003"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18503",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Denial of Service via super-linear regular expression work in csv.Sniffer.sniff()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18503"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-3479",
+     "PkgName": "libpython3.13-stdlib",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python pkgutil.get_data(): Path Traversal via improper resource argument validation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-3479"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-50812",
+     "PkgName": "libsqlite3-0",
+     "InstalledVersion": "3.46.1-7+deb13u2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "sqlite: SQLite: Denial of Service via malformed changeset in Session Extension",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-50812"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-50813",
+     "PkgName": "libsqlite3-0",
+     "InstalledVersion": "3.46.1-7+deb13u2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "sqlite: SQLite: Information disclosure via Session Extension changeset merge path",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-50813"
+    },
+    {
+     "VulnerabilityID": "CVE-2021-45346",
+     "PkgName": "libsqlite3-0",
+     "InstalledVersion": "3.46.1-7+deb13u2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "sqlite: crafted SQL query allows a malicious user to obtain sensitive information",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2021-45346"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-70873",
+     "PkgName": "libsqlite3-0",
+     "InstalledVersion": "3.46.1-7+deb13u2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "sqlite: SQLite: Information Disclosure via Crafted ZIP File",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-70873"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-102010",
+     "PkgName": "libstdc++6",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-102010"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-95619",
+     "PkgName": "libstdc++6",
+     "InstalledVersion": "14.2.0-19",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "gcc: libstdc++ integer overflow in `new` operator",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-95619"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-69720",
+     "PkgName": "libtinfo6",
+     "InstalledVersion": "6.5+20250216-2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "ncurses: ncurses: Buffer overflow vulnerability may lead to arbitrary code execution.",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-69720"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-6141",
+     "PkgName": "libtinfo6",
+     "InstalledVersion": "6.5+20250216-2",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "gnu-ncurses: ncurses Stack Buffer Overflow",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-6141"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-85231",
+     "PkgName": "libtirpc3t64",
+     "InstalledVersion": "1.3.6+ds-1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "libtirpc: libtirpc: Denial of service via unbounded memory allocation during RPCSEC_GSS decoding",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-85231"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-85977",
+     "PkgName": "libtirpc3t64",
+     "InstalledVersion": "1.3.6+ds-1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "libtirpc: libtirpc: Denial of Service via unbounded memory allocation during portmapper response decoding",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-85977"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-76642",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-76642"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-78408",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78408"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-78409",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78409"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-78410",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78410"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-3184",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-3184"
+    },
+    {
+     "VulnerabilityID": "CVE-2022-0563",
+     "PkgName": "libuuid1",
+     "InstalledVersion": "2.41.5-0+deb13u1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2022-0563"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15308",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python: CPU Denial of Service in HTML parser via repeated unterminated markup declarations",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15308"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19445",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Use-after-free of a server-side SSLContext when sni_callback switches contexts",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19445"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19553",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: python: Certificate verification bypass via missing server_hostname validation in SSLContext.wrap_bio()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19553"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-7210",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python/Expat: Denial of Service via crafted XML document",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-7210"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-82049",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python tarfile module: File modification and content disclosure via crafted archives",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-82049"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-12781",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: base64.b64decode() always accepts \"+/\" characters, despite setting altchars",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-12781"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15366",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: IMAP command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15366"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15367",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: POP3 command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15367"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12345",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: python: Arbitrary file deletion via race condition during temporary directory cleanup",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12345"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15310",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Denial of Service via crafted zip file memory pre-allocation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15310"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15806",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Information disclosure due to incorrect URL scheme matching",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15806"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-17084",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python stringprep module: Incorrect domain name processing breaks IDNA interoperability",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-17084"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19672",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Directory traversal allows creation of empty directories outside extraction destination",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19672"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-87910",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Security filter bypass allows arbitrary file write",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-87910"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12003",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Privilege escalation due to insecure VPATH handling in Windows legacy installers",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12003"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18503",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Denial of Service via super-linear regular expression work in csv.Sniffer.sniff()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18503"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-3479",
+     "PkgName": "python3.13-minimal",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python pkgutil.get_data(): Path Traversal via improper resource argument validation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-3479"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15308",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python: CPU Denial of Service in HTML parser via repeated unterminated markup declarations",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15308"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19445",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Use-after-free of a server-side SSLContext when sni_callback switches contexts",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19445"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19553",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: python: Certificate verification bypass via missing server_hostname validation in SSLContext.wrap_bio()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19553"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-7210",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python/Expat: Denial of Service via crafted XML document",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-7210"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-82049",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "HIGH",
+     "Title": "python: Python tarfile module: File modification and content disclosure via crafted archives",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-82049"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-12781",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: base64.b64decode() always accepts \"+/\" characters, despite setting altchars",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-12781"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15366",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: IMAP command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15366"
+    },
+    {
+     "VulnerabilityID": "CVE-2025-15367",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "will_not_fix",
+     "Severity": "MEDIUM",
+     "Title": "cpython: POP3 command injection in user-controlled commands",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-15367"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12345",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: python: Arbitrary file deletion via race condition during temporary directory cleanup",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12345"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15310",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Denial of Service via crafted zip file memory pre-allocation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15310"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-15806",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python: Information disclosure due to incorrect URL scheme matching",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15806"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-17084",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python stringprep module: Incorrect domain name processing breaks IDNA interoperability",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-17084"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-19672",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Directory traversal allows creation of empty directories outside extraction destination",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-19672"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-87910",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "python: Python tarfile module: Security filter bypass allows arbitrary file write",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-87910"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-12003",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Privilege escalation due to insecure VPATH handling in Windows legacy installers",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-12003"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-18503",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python: Denial of Service via super-linear regular expression work in csv.Sniffer.sniff()",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-18503"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-3479",
+     "PkgName": "python3.13-venv",
+     "InstalledVersion": "3.13.5-2+deb13u5",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "LOW",
+     "Title": "python: Python pkgutil.get_data(): Path Traversal via improper resource argument validation",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-3479"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-27171",
+     "PkgName": "zlib1g",
+     "InstalledVersion": "1:1.3.dfsg+really1.3.1-1+b1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "zlib: zlib: Denial of Service via infinite loop in CRC32 combine functions",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-27171"
+    },
+    {
+     "VulnerabilityID": "CVE-2026-85091",
+     "PkgName": "zlib1g",
+     "InstalledVersion": "1:1.3.dfsg+really1.3.1-1+b1",
+     "FixedVersion": null,
+     "Status": "affected",
+     "Severity": "MEDIUM",
+     "Title": "zlib versions 1.3.1.2 through 1.3.2 contain a heap buffer overflow vul ...",
+     "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-85091"
+    }
+   ]
+  },
+  {
+   "Target": "Python",
+   "Type": "python-pkg",
+   "Vulnerabilities": []
+  }
+ ]
+}

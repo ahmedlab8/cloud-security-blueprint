@@ -1,0 +1,78 @@
+
+======================================================
+tfsec is joining the Trivy family
+
+tfsec will continue to remain available 
+for the time being, although our engineering 
+attention will be directed at Trivy going forward.
+
+You can read more here: 
+https://github.com/aquasecurity/tfsec/discussions/1994
+======================================================
+
+Result #1 IGNORED (HIGH) IAM policy document uses sensitive action 's3:GetObject' on wildcarded resource 'e5c458e3-2ca9-4a42-9dce-eb9b4a571ccb/secure-app/*' 
+────────────────────────────────────────────────────────────────────────────────
+  iam.tf:135
+────────────────────────────────────────────────────────────────────────────────
+  115    data "aws_iam_policy_document" "app" {
+  ...  
+  135  [     resources = ["${module.s3_app_data.arn}/${var.app_namespace}/*"]
+  ...  
+  151    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.11/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #2 IGNORED (HIGH) IAM policy document uses sensitive action 'logs:CreateLogStream' on wildcarded resource '1ae6dfe8-e9b9-473e-9c05-e78af133bc1b:*' 
+────────────────────────────────────────────────────────────────────────────────
+  vpc.tf:151
+────────────────────────────────────────────────────────────────────────────────
+  142    data "aws_iam_policy_document" "flow_logs" {
+  ...  
+  151  [     resources = ["${aws_cloudwatch_log_group.flow_logs.arn}:*"]
+  ...  
+  153    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.11/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             161.895µs
+  parsing              16.445706ms
+  adaptation           1.101582ms
+  checks               6.714077ms
+  total                24.42326ms
+
+  counts
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    3
+  blocks processed     116
+  files read           12
+
+  results
+  ──────────────────────────────────────────
+  passed               53
+  ignored              2
+  critical             0
+  high                 0
+  medium               0
+  low                  0
+
+  53 passed, 2 ignored, 0 potential problem(s) detected.
+

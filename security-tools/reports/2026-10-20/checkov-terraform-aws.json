@@ -1,0 +1,1189 @@
+{
+ "check_type": "terraform",
+ "summary": {
+  "passed": 248,
+  "failed": 0,
+  "skipped": 7,
+  "parsing_errors": 0,
+  "resource_count": 80,
+  "checkov_version": "3.3.30"
+ },
+ "failed_checks": [],
+ "skipped_checks": [
+  {
+   "check_id": "CKV_AWS_356",
+   "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+   "resource": "aws_iam_policy_document.kms_base",
+   "file_path": "/kms.tf",
+   "file_line_range": [
+    4,
+    43
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-356",
+   "check_result": {
+    "result": "SKIPPED",
+    "suppress_comment": "KMS key policies must use \"*\" as resource (it refers to the key itself)."
+   }
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "check_name": "Ensure IAM policies does not allow write access without constraints",
+   "resource": "aws_iam_policy_document.kms_base",
+   "file_path": "/kms.tf",
+   "file_line_range": [
+    4,
+    43
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/ensure-iam-policies-do-not-allow-write-access-without-constraint",
+   "check_result": {
+    "result": "SKIPPED",
+    "suppress_comment": "Same as above - the account root statement is the AWS-documented default key policy."
+   }
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+   "resource": "aws_iam_policy_document.kms_base",
+   "file_path": "/kms.tf",
+   "file_line_range": [
+    4,
+    43
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/ensure-iam-policies-do-not-allow-permissions-management-resource-exposure-without-constraint",
+   "check_result": {
+    "result": "SKIPPED",
+    "suppress_comment": "Root principal statement is required by AWS so the key never becomes unmanageable; access is still governed by IAM."
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_62",
+   "check_name": "Ensure S3 buckets should have event notifications enabled",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this",
+   "file_path": "/modules/secure-s3-bucket/main.tf",
+   "file_line_range": [
+    48,
+    53
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-62",
+   "check_result": {
+    "result": "SKIPPED",
+    "entity": {
+     "aws_s3_bucket": {
+      "this": {
+       "__end_line__": 53,
+       "__start_line__": 48,
+       "bucket": [
+        "csb-dev-access-logs-${data.aws_caller_identity.current.account_id}"
+       ],
+       "force_destroy": [
+        false
+       ],
+       "__address__": "module.s3_access_logs.aws_s3_bucket.this"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type"
+    ],
+    "suppress_comment": "Event notifications are not required; object activity is captured by server access logs."
+   }
+  },
+  {
+   "check_id": "CKV2_AWS_62",
+   "check_name": "Ensure S3 buckets should have event notifications enabled",
+   "resource": "module.s3_app_data.aws_s3_bucket.this",
+   "file_path": "/modules/secure-s3-bucket/main.tf",
+   "file_line_range": [
+    48,
+    53
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-62",
+   "check_result": {
+    "result": "SKIPPED",
+    "entity": {
+     "aws_s3_bucket": {
+      "this": {
+       "__end_line__": 53,
+       "__start_line__": 48,
+       "bucket": [
+        "csb-dev-app-data-${data.aws_caller_identity.current.account_id}"
+       ],
+       "force_destroy": [
+        false
+       ],
+       "__address__": "module.s3_app_data.aws_s3_bucket.this"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type"
+    ],
+    "suppress_comment": "Event notifications are not required; object activity is captured by server access logs."
+   }
+  },
+  {
+   "check_id": "CKV_AWS_144",
+   "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this",
+   "file_path": "/modules/secure-s3-bucket/main.tf",
+   "file_line_range": [
+    48,
+    53
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-bucket-has-cross-region-replication-enabled",
+   "check_result": {
+    "result": "SKIPPED",
+    "entity": {
+     "aws_s3_bucket": {
+      "this": {
+       "__end_line__": 53,
+       "__start_line__": 48,
+       "bucket": [
+        "csb-dev-access-logs-${data.aws_caller_identity.current.account_id}"
+       ],
+       "force_destroy": [
+        false
+       ],
+       "__address__": "module.s3_access_logs.aws_s3_bucket.this"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "rule/*/status",
+     "replication_configuration/rules/*/status"
+    ],
+    "suppress_comment": "Cross-region replication is an environment-level DR decision; enable via a replication module for prod."
+   }
+  },
+  {
+   "check_id": "CKV_AWS_144",
+   "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+   "resource": "module.s3_app_data.aws_s3_bucket.this",
+   "file_path": "/modules/secure-s3-bucket/main.tf",
+   "file_line_range": [
+    48,
+    53
+   ],
+   "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-bucket-has-cross-region-replication-enabled",
+   "check_result": {
+    "result": "SKIPPED",
+    "entity": {
+     "aws_s3_bucket": {
+      "this": {
+       "__end_line__": 53,
+       "__start_line__": 48,
+       "bucket": [
+        "csb-dev-app-data-${data.aws_caller_identity.current.account_id}"
+       ],
+       "force_destroy": [
+        false
+       ],
+       "__address__": "module.s3_app_data.aws_s3_bucket.this"
+      }
+     }
+    },
+    "evaluated_keys": [
+     "resource_type",
+     "rule/*/status",
+     "replication_configuration/rules/*/status"
+    ],
+    "suppress_comment": "Cross-region replication is an environment-level DR decision; enable via a replication module for prod."
+   }
+  }
+ ],
+ "passed_checks": [
+  {
+   "check_id": "CKV_AWS_66",
+   "resource": "aws_cloudwatch_log_group.eks"
+  },
+  {
+   "check_id": "CKV_AWS_158",
+   "resource": "aws_cloudwatch_log_group.eks"
+  },
+  {
+   "check_id": "CKV_AWS_338",
+   "resource": "aws_cloudwatch_log_group.eks"
+  },
+  {
+   "check_id": "CKV_AWS_25",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_260",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_277",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_382",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_23",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_24",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_25",
+   "resource": "aws_vpc_security_group_ingress_rule.eks_api_from_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_260",
+   "resource": "aws_vpc_security_group_ingress_rule.eks_api_from_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_277",
+   "resource": "aws_vpc_security_group_ingress_rule.eks_api_from_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_23",
+   "resource": "aws_vpc_security_group_ingress_rule.eks_api_from_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_24",
+   "resource": "aws_vpc_security_group_ingress_rule.eks_api_from_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_382",
+   "resource": "aws_vpc_security_group_egress_rule.eks_to_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_23",
+   "resource": "aws_vpc_security_group_egress_rule.eks_to_vpc"
+  },
+  {
+   "check_id": "CKV_AWS_58",
+   "resource": "aws_eks_cluster.this"
+  },
+  {
+   "check_id": "CKV_AWS_339",
+   "resource": "aws_eks_cluster.this"
+  },
+  {
+   "check_id": "CKV_AWS_38",
+   "resource": "aws_eks_cluster.this"
+  },
+  {
+   "check_id": "CKV_AWS_37",
+   "resource": "aws_eks_cluster.this"
+  },
+  {
+   "check_id": "CKV_AWS_46",
+   "resource": "aws_launch_template.nodes"
+  },
+  {
+   "check_id": "CKV_AWS_341",
+   "resource": "aws_launch_template.nodes"
+  },
+  {
+   "check_id": "CKV_AWS_88",
+   "resource": "aws_launch_template.nodes"
+  },
+  {
+   "check_id": "CKV_AWS_79",
+   "resource": "aws_launch_template.nodes"
+  },
+  {
+   "check_id": "CKV_AWS_100",
+   "resource": "aws_eks_node_group.default"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV_AWS_61",
+   "resource": "aws_iam_role.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_60",
+   "resource": "aws_iam_role.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_393",
+   "resource": "aws_iam_role.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.eks_cluster"
+  },
+  {
+   "check_id": "CKV_AWS_61",
+   "resource": "aws_iam_role.eks_node"
+  },
+  {
+   "check_id": "CKV_AWS_60",
+   "resource": "aws_iam_role.eks_node"
+  },
+  {
+   "check_id": "CKV_AWS_393",
+   "resource": "aws_iam_role.eks_node"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role.eks_node"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.eks_node[\"AmazonEC2ContainerRegistryReadOnly\"]"
+  },
+  {
+   "check_id": "CKV_AWS_61",
+   "resource": "aws_iam_role.vpc_cni"
+  },
+  {
+   "check_id": "CKV_AWS_60",
+   "resource": "aws_iam_role.vpc_cni"
+  },
+  {
+   "check_id": "CKV_AWS_393",
+   "resource": "aws_iam_role.vpc_cni"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role.vpc_cni"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.vpc_cni"
+  },
+  {
+   "check_id": "CKV_AWS_61",
+   "resource": "aws_iam_role.app"
+  },
+  {
+   "check_id": "CKV_AWS_60",
+   "resource": "aws_iam_role.app"
+  },
+  {
+   "check_id": "CKV_AWS_393",
+   "resource": "aws_iam_role.app"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role.app"
+  },
+  {
+   "check_id": "CKV_AWS_63",
+   "resource": "aws_iam_policy.app"
+  },
+  {
+   "check_id": "CKV_AWS_62",
+   "resource": "aws_iam_policy.app"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.app"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.eks_node[\"AmazonEKSWorkerNodePolicy\"]"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role_policy_attachment.eks_node[\"AmazonSSMManagedInstanceCore\"]"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV_AWS_33",
+   "resource": "aws_kms_key.this[\"s3\"]"
+  },
+  {
+   "check_id": "CKV_AWS_7",
+   "resource": "aws_kms_key.this[\"s3\"]"
+  },
+  {
+   "check_id": "CKV_AWS_227",
+   "resource": "aws_kms_key.this[\"s3\"]"
+  },
+  {
+   "check_id": "CKV_AWS_33",
+   "resource": "aws_kms_key.this[\"ebs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_7",
+   "resource": "aws_kms_key.this[\"ebs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_227",
+   "resource": "aws_kms_key.this[\"ebs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_33",
+   "resource": "aws_kms_key.this[\"eks\"]"
+  },
+  {
+   "check_id": "CKV_AWS_7",
+   "resource": "aws_kms_key.this[\"eks\"]"
+  },
+  {
+   "check_id": "CKV_AWS_227",
+   "resource": "aws_kms_key.this[\"eks\"]"
+  },
+  {
+   "check_id": "CKV_AWS_33",
+   "resource": "aws_kms_key.this[\"logs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_7",
+   "resource": "aws_kms_key.this[\"logs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_227",
+   "resource": "aws_kms_key.this[\"logs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_394",
+   "resource": "aws_availability_zones.available"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_93",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_56",
+   "resource": "module.s3_access_logs.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_55",
+   "resource": "module.s3_access_logs.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_53",
+   "resource": "module.s3_access_logs.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_54",
+   "resource": "module.s3_access_logs.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_300",
+   "resource": "module.s3_access_logs.aws_s3_bucket_lifecycle_configuration.this"
+  },
+  {
+   "check_id": "CKV_AWS_93",
+   "resource": "module.s3_access_logs.aws_s3_bucket_policy.this"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV_AWS_93",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_56",
+   "resource": "module.s3_app_data.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_55",
+   "resource": "module.s3_app_data.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_53",
+   "resource": "module.s3_app_data.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_54",
+   "resource": "module.s3_app_data.aws_s3_bucket_public_access_block.this"
+  },
+  {
+   "check_id": "CKV_AWS_300",
+   "resource": "module.s3_app_data.aws_s3_bucket_lifecycle_configuration.this"
+  },
+  {
+   "check_id": "CKV_AWS_93",
+   "resource": "module.s3_app_data.aws_s3_bucket_policy.this"
+  },
+  {
+   "check_id": "CKV_AWS_41",
+   "resource": "aws.default"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV_AWS_1",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_356",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_108",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_111",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_107",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_110",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_283",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_109",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_49",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_358",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.public[0]"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.private[0]"
+  },
+  {
+   "check_id": "CKV_AWS_66",
+   "resource": "aws_cloudwatch_log_group.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_158",
+   "resource": "aws_cloudwatch_log_group.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_338",
+   "resource": "aws_cloudwatch_log_group.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_61",
+   "resource": "aws_iam_role.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_60",
+   "resource": "aws_iam_role.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_393",
+   "resource": "aws_iam_role.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_274",
+   "resource": "aws_iam_role.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_63",
+   "resource": "aws_iam_role_policy.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_62",
+   "resource": "aws_iam_role_policy.flow_logs"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.public[1]"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.public[2]"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.private[1]"
+  },
+  {
+   "check_id": "CKV_AWS_130",
+   "resource": "aws_subnet.private[2]"
+  },
+  {
+   "check_id": "CKV2_AWS_56",
+   "resource": "aws_iam_role.eks_cluster"
+  },
+  {
+   "check_id": "CKV2_AWS_56",
+   "resource": "aws_iam_role.eks_node"
+  },
+  {
+   "check_id": "CKV2_AWS_56",
+   "resource": "aws_iam_role.vpc_cni"
+  },
+  {
+   "check_id": "CKV2_AWS_56",
+   "resource": "aws_iam_role.app"
+  },
+  {
+   "check_id": "CKV2_AWS_56",
+   "resource": "aws_iam_role.flow_logs"
+  },
+  {
+   "check_id": "CKV2_AWS_5",
+   "resource": "aws_security_group.eks_cluster"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route_table.public"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route.public_internet"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route_table.private[0]"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route.private_nat[0]"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route_table.private[1]"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route_table.private[2]"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route.private_nat[1]"
+  },
+  {
+   "check_id": "CKV2_AWS_44",
+   "resource": "aws_route.private_nat[2]"
+  },
+  {
+   "check_id": "CKV_AWS_18",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_18",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_61",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_61",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_11",
+   "resource": "aws_vpc.this"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.eks_cluster_assume"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.eks_node_assume"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.vpc_cni_assume"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.app_assume"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.app"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.kms_base"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "module.s3_access_logs.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "module.s3_app_data.aws_iam_policy_document.this"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.flow_logs_assume"
+  },
+  {
+   "check_id": "CKV2_AWS_40",
+   "resource": "aws_iam_policy_document.flow_logs"
+  },
+  {
+   "check_id": "CKV2_AWS_65",
+   "resource": "module.s3_access_logs.aws_s3_bucket_ownership_controls.this"
+  },
+  {
+   "check_id": "CKV2_AWS_65",
+   "resource": "module.s3_app_data.aws_s3_bucket_ownership_controls.this"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route_table.public"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route.public_internet"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route_table.private[0]"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route.private_nat[0]"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route_table.private[1]"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route_table.private[2]"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route.private_nat[1]"
+  },
+  {
+   "check_id": "CKV2_AWS_35",
+   "resource": "aws_route.private_nat[2]"
+  },
+  {
+   "check_id": "CKV_AWS_20",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_20",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_57",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_57",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_6",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_6",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_64",
+   "resource": "aws_kms_key.this[\"s3\"]"
+  },
+  {
+   "check_id": "CKV2_AWS_64",
+   "resource": "aws_kms_key.this[\"ebs\"]"
+  },
+  {
+   "check_id": "CKV2_AWS_64",
+   "resource": "aws_kms_key.this[\"eks\"]"
+  },
+  {
+   "check_id": "CKV2_AWS_64",
+   "resource": "aws_kms_key.this[\"logs\"]"
+  },
+  {
+   "check_id": "CKV_AWS_21",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_21",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_19",
+   "resource": "aws_eip.nat[0]"
+  },
+  {
+   "check_id": "CKV2_AWS_19",
+   "resource": "aws_eip.nat[1]"
+  },
+  {
+   "check_id": "CKV2_AWS_19",
+   "resource": "aws_eip.nat[2]"
+  },
+  {
+   "check_id": "CKV_AWS_145",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_145",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV2_AWS_12",
+   "resource": "aws_vpc.this"
+  },
+  {
+   "check_id": "CKV_AWS_19",
+   "resource": "module.s3_access_logs.aws_s3_bucket.this"
+  },
+  {
+   "check_id": "CKV_AWS_19",
+   "resource": "module.s3_app_data.aws_s3_bucket.this"
+  }
+ ]
+}
