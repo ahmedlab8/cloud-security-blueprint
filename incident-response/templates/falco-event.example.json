@@ -1,0 +1,16 @@
+{
+  "hostname": "ip-10-20-17-42.ec2.internal",
+  "output": "Shell spawned in container (user=nonroot uid=65532 shell=sh parent=python3 cmdline=sh -c id ns=secure-app pod=secure-app-6f7d9c5b8-x2k4q container=secure-app image=ghcr.io/ahmedlab8/secure-app:1.0.0)",
+  "priority": "Warning",
+  "rule": "CSB Shell Spawned in Container",
+  "source": "syscall",
+  "tags": ["container", "shell", "mitre_execution", "T1059", "csb"],
+  "time": "2026-10-20T15:04:05.000000000Z",
+  "output_fields": {
+    "k8s.ns.name": "secure-app",
+    "k8s.pod.name": "secure-app-6f7d9c5b8-x2k4q",
+    "proc.name": "sh",
+    "proc.pname": "python3",
+    "user.uid": 65532
+  }
+}
