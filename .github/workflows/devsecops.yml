@@ -301,6 +301,45 @@ jobs:
           path: zap/
           retention-days: 30
 
+  # ------------------------------------------------------------------ Code scanning (Security tab)
+  code-scanning:
+    name: Upload SARIF to GitHub code scanning
+    runs-on: ubuntu-latest
+    # Code scanning is free on public repos. Skip on private repos and on fork PRs (read-only token).
+    # Report-only: the blocking gates are the tfsec / Trivy jobs above.
+    if: ${{ !github.event.repository.private && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install tfsec + Trivy
+        run: |
+          set -euo pipefail
+          curl -sSfL -o /usr/local/bin/tfsec "https://github.com/aquasecurity/tfsec/releases/download/${TFSEC_VERSION}/tfsec-linux-amd64"
+          chmod +x /usr/local/bin/tfsec
+          curl -sSfL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" | tar xz -C /usr/local/bin trivy
+      - name: Generate SARIF
+        run: |
+          mkdir -p sarif
+          tfsec terraform --no-color --soft-fail --format sarif --out sarif/tfsec.sarif
+          trivy config --skip-dirs security-tools/examples --skip-dirs policies/opa/tests/fixtures \
+            --ignorefile .trivyignore.yaml --format sarif --output sarif/trivy-config.sarif .
+      - name: Upload tfsec SARIF
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          sarif_file: sarif/tfsec.sarif
+          category: tfsec
+      - name: Upload Trivy config SARIF
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          sarif_file: sarif/trivy-config.sarif
+          category: trivy-config
+
   # ------------------------------------------------------------------ Gate
   security-gate:
     name: Security gate

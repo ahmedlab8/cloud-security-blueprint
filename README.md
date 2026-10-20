@@ -154,6 +154,9 @@ flowchart LR
 Hardening: actions pinned to commit SHAs, read-only `GITHUB_TOKEN`, `persist-credentials: false`,
 pinned tool versions, a weekly scheduled re-scan, and Dependabot. Details: [cicd/README.md](cicd/README.md).
 
+Code scanning: a report-only `code-scanning` job uploads tfsec and Trivy config results as SARIF to the
+repository's **Security → Code scanning** tab (public repos only; it skips on private repos and fork PRs).
+
 ## Security scan results
 
 From real runs on 2026-10-20 ([full reports](security-tools/reports/README.md)):
