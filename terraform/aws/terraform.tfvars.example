@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars and adjust. Never commit real tfvars.
+project         = "csb"
+environment     = "dev"
+region          = "us-east-1"
+vpc_cidr        = "10.20.0.0/16"
+az_count        = 3
+eks_version     = "1.31"
+eks_admin_cidrs = [] # private-only API endpoint; reach it via SSM/VPN
+# cluster_admin_role_arn = "arn:aws:iam::<ACCOUNT_ID>:role/<BREAK_GLASS_ROLE>"

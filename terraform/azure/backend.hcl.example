@@ -1,0 +1,6 @@
+# terraform init -backend-config=backend.hcl
+resource_group_name  = "<STATE_RG>"
+storage_account_name = "<STATE_STORAGE_ACCOUNT>"
+container_name       = "tfstate"
+key                  = "cloud-security-blueprint/azure/terraform.tfstate"
+use_azuread_auth     = true

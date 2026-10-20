@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and adjust. Never commit real tfvars.
+# subscription_id is supplied via the TF_VAR_subscription_id environment variable.
+project                = "csb"
+environment            = "dev"
+location               = "eastus2"
+vnet_cidr              = "10.30.0.0/16"
+admin_group_object_ids = ["<ENTRA_ID_GROUP_OBJECT_ID>"]
