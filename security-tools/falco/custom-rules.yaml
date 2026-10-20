@@ -1,0 +1,181 @@
+# =============================================================================
+# cloud-security-blueprint - custom Falco runtime detection rules
+# Self-contained (csb_* macros/lists) so they load with or without the default ruleset.
+# MITRE ATT&CK tags let SIEM/IR tooling pivot on technique IDs.
+# =============================================================================
+
+- macro: csb_spawned_process
+  condition: (evt.type in (execve, execveat))
+
+- macro: csb_container
+  condition: (container.id != host)
+
+- macro: csb_open_read
+  condition: (evt.type in (open, openat, openat2) and evt.is_open_read = true and fd.typechar = 'f' and fd.num >= 0)
+
+- list: csb_shell_binaries
+  items: [sh, bash, dash, zsh, ksh, csh, tcsh, ash, busybox, fish]
+
+# Parents that legitimately start shells (e.g. container entrypoint wrappers). Keep minimal.
+- list: csb_allowed_shell_parents
+  items: [runc, containerd-shim, tini, dumb-init]
+
+- list: csb_allowed_shell_images
+  items: []
+
+# ---------------------------------------------------------------------------
+# 1. Shell in container
+# ---------------------------------------------------------------------------
+- rule: CSB Shell Spawned in Container
+  desc: >
+    An interactive or scripted shell started inside a container. Production images in this
+    blueprint are distroless and have no shell, so any shell is a strong signal of
+    kubectl exec abuse, a debug image, or remote code execution.
+  condition: >
+    csb_spawned_process and csb_container
+    and proc.name in (csb_shell_binaries)
+    and not proc.pname in (csb_allowed_shell_parents)
+    and not container.image.repository in (csb_allowed_shell_images)
+  output: >
+    Shell spawned in container (user=%user.name uid=%user.uid shell=%proc.name parent=%proc.pname
+    cmdline=%proc.cmdline tty=%proc.tty ns=%k8s.ns.name pod=%k8s.pod.name
+    container=%container.name image=%container.image.repository:%container.image.tag)
+  priority: WARNING
+  tags: [container, shell, mitre_execution, T1059, csb]
+
+# ---------------------------------------------------------------------------
+# 2. Privilege escalation
+# ---------------------------------------------------------------------------
+- list: csb_privesc_binaries
+  items: [sudo, su, pkexec, doas, newgrp, chsh]
+
+- rule: CSB Privilege Escalation Binary Executed
+  desc: A setuid helper used to gain root (sudo/su/pkexec) was executed inside a container.
+  condition: csb_spawned_process and csb_container and proc.name in (csb_privesc_binaries)
+  output: >
+    Privilege escalation attempt via %proc.name (user=%user.name uid=%user.uid cmdline=%proc.cmdline
+    parent=%proc.pname ns=%k8s.ns.name pod=%k8s.pod.name image=%container.image.repository)
+  priority: CRITICAL
+  tags: [container, privilege_escalation, mitre_privilege_escalation, T1548, csb]
+
+- rule: CSB Setuid or Setgid Bit Set
+  desc: A file was made setuid/setgid inside a container - a classic persistence/escalation step.
+  condition: >
+    csb_container and evt.type in (chmod, fchmod, fchmodat)
+    and (evt.arg.mode contains S_ISUID or evt.arg.mode contains S_ISGID)
+  output: >
+    Setuid/setgid bit set (file=%evt.arg.filename mode=%evt.arg.mode user=%user.name
+    proc=%proc.cmdline ns=%k8s.ns.name pod=%k8s.pod.name image=%container.image.repository)
+  priority: CRITICAL
+  tags: [container, privilege_escalation, mitre_privilege_escalation, T1548.001, csb]
+
+- rule: CSB Non-root Process Became Root
+  desc: A process inside a container changed its UID from non-root to root.
+  condition: >
+    csb_container and evt.type in (setuid, setresuid)
+    and evt.res = SUCCESS and user.uid != 0 and evt.arg.uid = 0
+  output: >
+    Process escalated to UID 0 (proc=%proc.cmdline previous_uid=%user.uid ns=%k8s.ns.name
+    pod=%k8s.pod.name image=%container.image.repository)
+  priority: CRITICAL
+  tags: [container, privilege_escalation, mitre_privilege_escalation, T1068, csb]
+
+- list: csb_escape_binaries
+  items: [nsenter, unshare, chroot, capsh]
+
+- rule: CSB Container Escape Tooling Executed
+  desc: Namespace/capability manipulation tools commonly used to break out of a container.
+  condition: csb_spawned_process and csb_container and proc.name in (csb_escape_binaries)
+  output: >
+    Container escape tooling executed (proc=%proc.cmdline user=%user.name ns=%k8s.ns.name
+    pod=%k8s.pod.name image=%container.image.repository)
+  priority: CRITICAL
+  tags: [container, privilege_escalation, mitre_privilege_escalation, T1611, csb]
+
+# ---------------------------------------------------------------------------
+# 3. Crypto mining behaviour
+# ---------------------------------------------------------------------------
+- list: csb_miner_binaries
+  items: [xmrig, xmr-stak, minerd, cpuminer, ccminer, ethminer, nbminer, t-rex, lolminer, cgminer, bfgminer, nanominer]
+
+- list: csb_mining_ports
+  items: [3333, 3334, 3357, 4444, 5555, 5556, 6666, 7777, 8888, 9999, 14433, 14444, 45560, 45700]
+
+- rule: CSB Crypto Miner Process
+  desc: A known cryptocurrency miner binary, or a process using a stratum mining URL, was started.
+  condition: >
+    csb_spawned_process and csb_container
+    and (proc.name in (csb_miner_binaries)
+         or proc.cmdline contains "stratum+tcp://"
+         or proc.cmdline contains "stratum+ssl://"
+         or proc.cmdline contains "--donate-level")
+  output: >
+    Crypto mining process detected (proc=%proc.cmdline user=%user.name ns=%k8s.ns.name
+    pod=%k8s.pod.name image=%container.image.repository)
+  priority: CRITICAL
+  tags: [container, cryptomining, mitre_impact, T1496, csb]
+
+- rule: CSB Outbound Connection to Mining Pool Port
+  desc: A container opened an outbound connection to a port commonly used by mining pools.
+  condition: >
+    csb_container and evt.type = connect
+    and fd.typechar = 4 and fd.sport in (csb_mining_ports)
+  output: >
+    Outbound connection to likely mining pool (dest=%fd.sip:%fd.sport proc=%proc.cmdline
+    ns=%k8s.ns.name pod=%k8s.pod.name image=%container.image.repository)
+  priority: WARNING
+  tags: [container, network, cryptomining, mitre_impact, T1496, csb]
+
+# ---------------------------------------------------------------------------
+# 4. Sensitive file access
+# ---------------------------------------------------------------------------
+- list: csb_sensitive_files
+  items:
+    - /etc/shadow
+    - /etc/gshadow
+    - /etc/sudoers
+    - /etc/pam.conf
+    - /etc/security/pwquality.conf
+
+- list: csb_sensitive_prefixes
+  items:
+    - /root/.ssh
+    - /root/.aws
+    - /root/.azure
+    - /root/.kube
+    - /etc/kubernetes/pki
+    - /var/lib/kubelet/pki
+    - /etc/sudoers.d
+
+- list: csb_allowed_sensitive_readers
+  items: [sshd, sudo, su, login, passwd, chpasswd, unix_chkpwd]
+
+- rule: CSB Sensitive File Read in Container
+  desc: A container process read credential stores, cloud credentials or Kubernetes PKI material.
+  condition: >
+    csb_open_read and csb_container
+    and (fd.name in (csb_sensitive_files)
+         or fd.directory in (csb_sensitive_prefixes)
+         or fd.name startswith /root/.ssh/
+         or fd.name startswith /root/.aws/
+         or fd.name startswith /etc/kubernetes/pki/)
+    and not proc.name in (csb_allowed_sensitive_readers)
+  output: >
+    Sensitive file opened for reading (file=%fd.name proc=%proc.cmdline user=%user.name
+    ns=%k8s.ns.name pod=%k8s.pod.name image=%container.image.repository)
+  priority: ERROR
+  tags: [container, filesystem, credential_access, mitre_credential_access, T1552, csb]
+
+- rule: CSB Service Account Token Read by Unexpected Process
+  desc: >
+    The workload in this blueprint does not mount a service-account token. Any read of a
+    projected token path indicates a pod running with an unexpected token or token theft.
+  condition: >
+    csb_open_read and csb_container
+    and fd.name startswith /var/run/secrets/kubernetes.io/serviceaccount
+    and k8s.ns.name = secure-app
+  output: >
+    Kubernetes SA token read in secure-app (file=%fd.name proc=%proc.cmdline pod=%k8s.pod.name
+    image=%container.image.repository)
+  priority: WARNING
+  tags: [container, k8s, credential_access, mitre_credential_access, T1528, csb]

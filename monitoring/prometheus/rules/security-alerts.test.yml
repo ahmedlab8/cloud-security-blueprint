@@ -1,0 +1,36 @@
+# promtool test rules monitoring/prometheus/rules/security-alerts.test.yml
+rule_files:
+  - security-alerts.yml
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'app_login_attempts_total{namespace="secure-app",result="failure"}'
+        values: '0+120x15'
+    alert_rule_test:
+      - eval_time: 12m
+        alertname: HighFailedLoginRate
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              team: security
+              namespace: secure-app
+            exp_annotations:
+              summary: "Possible brute-force / credential stuffing in secure-app"
+              description: "Failed logins above 1/s for 5 minutes (2/s)."
+  - interval: 1m
+    input_series:
+      - series: 'kube_pod_container_status_restarts_total{namespace="secure-app",pod="secure-app-1",container="secure-app"}'
+        values: '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16'
+    alert_rule_test:
+      - eval_time: 16m
+        alertname: ContainerRestartingFrequently
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              namespace: secure-app
+              pod: secure-app-1
+              container: secure-app
+            exp_annotations:
+              summary: "secure-app/secure-app-1 (secure-app) restarting"
+              description: "More than 3 restarts in 15 minutes - crash loop or OOM; also a common side-effect of exploitation attempts."

@@ -1,0 +1,77 @@
+# Helm values for falcosecurity/falco (chart >= 4.x).
+#   helm repo add falcosecurity https://falcosecurity.github.io/charts
+#   helm upgrade --install falco falcosecurity/falco -n falco --create-namespace \
+#     -f security-tools/falco/values.yaml \
+#     --set-file customRules."csb-rules\.yaml"=security-tools/falco/custom-rules.yaml
+
+driver:
+  kind: modern_ebpf # CO-RE eBPF probe: no kernel module build, works on EKS AL2023 and AKS
+
+# Container/Kubernetes metadata (k8s.ns.name, k8s.pod.name, ...) comes from the container
+# plugin that recent charts enable by default; no extra collector config is needed.
+
+tty: false
+
+falco:
+  json_output: true
+  json_include_output_property: true
+  priority: notice
+  rules_files:
+    - /etc/falco/falco_rules.yaml
+    - /etc/falco/falco_rules.local.yaml
+    - /etc/falco/rules.d
+  http_output:
+    enabled: true
+    url: http://falco-falcosidekick:2801/
+  metrics:
+    enabled: true
+    interval: 30s
+    output_rule: false
+
+metrics:
+  enabled: true
+  service:
+    create: true
+
+serviceMonitor:
+  create: true
+  labels:
+    release: kube-prometheus-stack
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+  - effect: NoSchedule
+    key: CriticalAddonsOnly
+    operator: Exists
+
+# Rules are supplied with --set-file (see header) so the YAML stays the single source of truth.
+customRules: {}
+
+falcosidekick:
+  enabled: true
+  replicaCount: 2
+  webui:
+    enabled: false
+  config:
+    # Webhook URLs are read from an existing Kubernetes Secret - never put them in values.
+    existingSecret: falcosidekick-webhooks
+    slack:
+      minimumpriority: warning
+      outputformat: all
+    teams:
+      minimumpriority: warning
+    prometheus:
+      extralabels: "source:falco"
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: kube-prometheus-stack

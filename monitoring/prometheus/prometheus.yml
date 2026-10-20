@@ -1,0 +1,78 @@
+# Standalone Prometheus config (kube-prometheus-stack users: see ../kube-prometheus-stack-values.yaml).
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+  external_labels:
+    cluster: csb-dev
+
+rule_files:
+  - /etc/prometheus/rules/*.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+
+scrape_configs:
+  # Pods that opt in with prometheus.io/scrape annotations (secure-app does).
+  - job_name: kubernetes-pods
+    kubernetes_sd_configs:
+      - role: pod
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        target_label: pod
+
+  # Falcosidekick exposes falco event counters.
+  - job_name: falcosidekick
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names: [falco]
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: falco-falcosidekick
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: http
+
+  # Gatekeeper admission/audit metrics (violations, denied requests).
+  - job_name: gatekeeper
+    kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names: [gatekeeper-system]
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_container_port_name]
+        action: keep
+        regex: metrics
+
+  # kube-state-metrics: restarts, pod phases, container status.
+  - job_name: kube-state-metrics
+    static_configs:
+      - targets: ["kube-state-metrics.monitoring.svc:8080"]
+
+  # cAdvisor via kubelet: container CPU / memory.
+  - job_name: kubernetes-cadvisor
+    scheme: https
+    metrics_path: /metrics/cadvisor
+    kubernetes_sd_configs:
+      - role: node
+    tls_config:
+      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    authorization:
+      credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
