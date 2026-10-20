@@ -15,7 +15,16 @@ updates:
     directory: /app
     schedule:
       interval: weekly
+    ignore:
+      # The build-stage Python minor version must match the distroless runtime (3.13 on Debian 13),
+      # so only patch updates are automated; minor/major moves are a deliberate, paired change.
+      - dependency-name: "python"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
   - package-ecosystem: terraform
     directories: ["/terraform/aws", "/terraform/azure"]
     schedule:
       interval: weekly
+    ignore:
+      # Provider major versions contain breaking changes; upgrade them deliberately with a plan review.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
