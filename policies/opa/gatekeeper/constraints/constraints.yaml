@@ -1,0 +1,82 @@
+# Constraints instantiate the templates. Start new rules with enforcementAction: warn or
+# dryrun, review audit results, then switch to deny (see docs/security-design-decisions.md).
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sBlockRootContainers
+metadata:
+  name: block-root-containers
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod", "ReplicationController"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "StatefulSet", "DaemonSet", "ReplicaSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    excludedNamespaces:
+      - kube-system
+      - gatekeeper-system
+      - falco
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sBlockPrivilegedContainers
+metadata:
+  name: block-privileged-containers
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod", "ReplicationController"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "StatefulSet", "DaemonSet", "ReplicaSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    excludedNamespaces:
+      - kube-system
+      - gatekeeper-system
+      - falco
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDisallowLatestTag
+metadata:
+  name: disallow-latest-tag
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod", "ReplicationController"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "StatefulSet", "DaemonSet", "ReplicaSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    excludedNamespaces: [kube-system]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequireResourceLimits
+metadata:
+  name: require-resource-limits
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod", "ReplicationController"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "StatefulSet", "DaemonSet", "ReplicaSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    excludedNamespaces: [kube-system, gatekeeper-system]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sBlockPublicLoadBalancer
+metadata:
+  name: block-public-load-balancers
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Service"]
