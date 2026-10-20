@@ -1,0 +1,9 @@
+# Accepted Trivy findings. Each entry is scoped to a path and carries a justification.
+misconfigurations:
+  - id: KSV-0056
+    paths:
+      - "kubernetes/secure-cluster/rbac.yaml"
+    statement: >-
+      Intentional and namespace-scoped. The incident-responder Role must create the quarantine
+      NetworkPolicy, and the deployer Role patches the app Service. Both are bound to IdP groups
+      only, limited to the secure-app namespace, and Gatekeeper still blocks public LoadBalancers.

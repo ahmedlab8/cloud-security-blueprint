@@ -1,0 +1,324 @@
+name: DevSecOps Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # weekly re-scan picks up newly published CVEs
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TERRAFORM_VERSION: "1.9.8"
+  TFSEC_VERSION: "v1.28.11"
+  CHECKOV_VERSION: "3.3.30"
+  TRIVY_VERSION: "0.76.0"
+  GITLEAKS_VERSION: "8.30.1"
+  SEMGREP_VERSION: "1.181.0"
+  CONFTEST_VERSION: "0.71.1"
+  OPA_VERSION: "v1.21.3"
+  KUBECONFORM_VERSION: "v0.8.0"
+  FALCO_IMAGE: "falcosecurity/falco:0.45.1"
+  ZAP_IMAGE: "ghcr.io/zaproxy/zaproxy:stable"
+  IMAGE: "secure-app:${{ github.sha }}"
+
+jobs:
+  # ------------------------------------------------------------------ Stage 1
+  terraform:
+    name: Terraform fmt + validate (${{ matrix.cloud }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cloud: [aws, azure]
+    defaults:
+      run:
+        working-directory: terraform/${{ matrix.cloud }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          terraform_wrapper: false
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive -diff
+      - name: Terraform init (no backend)
+        run: terraform init -backend=false -input=false -lockfile=readonly
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+  # ------------------------------------------------------------------ Stage 2: IaC scanning
+  tfsec:
+    name: tfsec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install tfsec
+        run: |
+          curl -sSfL -o /usr/local/bin/tfsec "https://github.com/aquasecurity/tfsec/releases/download/${TFSEC_VERSION}/tfsec-linux-amd64"
+          chmod +x /usr/local/bin/tfsec
+      - name: tfsec report (all severities)
+        run: |
+          mkdir -p reports
+          tfsec terraform --no-color --soft-fail --format json,default --out reports/tfsec
+      - name: tfsec gate (fail on HIGH / CRITICAL)
+        run: tfsec terraform --no-color --minimum-severity HIGH --concise-output
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: tfsec-report
+          path: reports/
+          retention-days: 30
+
+  checkov:
+    name: Checkov
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install Checkov
+        run: pip install --no-cache-dir "checkov==${CHECKOV_VERSION}"
+      - name: Checkov (Terraform, Kubernetes, Dockerfile, GitHub Actions) - gate on any failed check
+        run: |
+          mkdir -p reports
+          checkov --directory terraform --directory kubernetes --directory app --directory .github \
+            --framework terraform kubernetes dockerfile github_actions \
+            --skip-path security-tools/examples \
+            --output cli --output junitxml --output-file-path console,reports/checkov-junit.xml \
+            --compact --quiet
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: checkov-report
+          path: reports/
+          retention-days: 30
+
+  # ------------------------------------------------------------------ Stage 3: policy + config validation
+  policy-and-config:
+    name: OPA / Kubernetes / Falco / Prometheus validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install opa, conftest, kubeconform
+        run: |
+          set -euo pipefail
+          curl -sSfL -o /usr/local/bin/opa "https://github.com/open-policy-agent/opa/releases/download/${OPA_VERSION}/opa_linux_amd64_static"
+          chmod +x /usr/local/bin/opa
+          curl -sSfL "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz" | tar xz -C /usr/local/bin conftest
+          curl -sSfL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" | tar xz -C /usr/local/bin kubeconform
+      - name: OPA unit tests (Gatekeeper policies)
+        run: |
+          opa fmt --list --fail policies/opa
+          opa test policies/opa/gatekeeper/rego policies/opa/tests -v
+      - name: Gatekeeper templates are in sync with tested Rego
+        run: python3 policies/opa/gatekeeper/generate.py --check
+      - name: Kubernetes schema validation (kubeconform)
+        run: |
+          kubeconform -strict -summary -kubernetes-version 1.31.0 \
+            -schema-location default \
+            -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+            -skip Kustomization,AdmissionConfiguration,K8sBlockRootContainers,K8sBlockPrivilegedContainers,K8sDisallowLatestTag,K8sRequireResourceLimits,K8sBlockPublicLoadBalancer \
+            $(find kubernetes policies/opa/gatekeeper monitoring/prometheus -name '*.yaml' ! -name kustomization.yaml)
+      - name: Conftest - manifests must pass the admission policies
+        run: |
+          conftest test -p policies/opa/gatekeeper/rego -p policies/opa/conftest \
+            $(find kubernetes -name '*.yaml' ! -name kustomization.yaml ! -name admission-configuration.yaml)
+      - name: Conftest - negative fixture must be rejected
+        run: |
+          if conftest test -p policies/opa/gatekeeper/rego -p policies/opa/conftest policies/opa/tests/fixtures/bad-workload.yaml; then
+            echo "::error::insecure fixture was NOT rejected by policy"; exit 1
+          fi
+      - name: Falco rules validation
+        run: docker run --rm -v "$PWD/security-tools/falco:/rules:ro" "$FALCO_IMAGE" falco -V /rules/custom-rules.yaml
+      - name: Prometheus rules + Alertmanager config
+        run: |
+          docker run --rm -v "$PWD/monitoring:/m:ro" --entrypoint promtool prom/prometheus:v3.5.0 check rules /m/prometheus/rules/security-alerts.yml
+          docker run --rm -v "$PWD/monitoring:/m:ro" -w /m/prometheus/rules --entrypoint promtool prom/prometheus:v3.5.0 test rules security-alerts.test.yml
+          docker run --rm -v "$PWD/monitoring:/m:ro" --entrypoint amtool prom/alertmanager:v0.28.1 check-config /m/alertmanager/alertmanager.yml
+      - name: Grafana dashboards are valid JSON
+        run: for f in monitoring/grafana/dashboards/*.json; do python3 -m json.tool "$f" > /dev/null; done
+
+  # ------------------------------------------------------------------ Stage 4: code security
+  secret-scan:
+    name: Secret scanning (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # scan full history, not just the tip
+          persist-credentials: false
+      - name: Install gitleaks
+        run: curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar xz -C /usr/local/bin gitleaks
+      - name: gitleaks (full git history)
+        run: |
+          mkdir -p reports
+          gitleaks git --redact --verbose --exit-code 1 --report-format json --report-path reports/gitleaks.json .
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: gitleaks-report
+          path: reports/
+          retention-days: 30
+
+  sast:
+    name: SAST (Semgrep) + unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install tooling
+        run: |
+          pip install --no-cache-dir "semgrep==${SEMGREP_VERSION}" ruff pytest -r app/requirements.txt
+      - name: Semgrep (fail on ERROR severity)
+        env:
+          SEMGREP_SEND_METRICS: "off"
+        run: |
+          mkdir -p reports
+          semgrep scan --config p/python --config p/flask --config p/dockerfile \
+            --config p/github-actions --config p/secrets \
+            --exclude security-tools/examples \
+            --json --output reports/semgrep.json --metrics off
+          semgrep scan --config p/python --config p/flask --config p/dockerfile \
+            --config p/github-actions --config p/secrets \
+            --exclude security-tools/examples \
+            --severity ERROR --error --metrics off
+      - name: Ruff lint + format
+        run: ruff check . && ruff format --check .
+      - name: ShellCheck
+        run: shellcheck incident-response/*.sh
+      - name: Unit tests (app + incident response)
+        run: pytest -q app/tests incident-response/tests
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: semgrep-report
+          path: reports/
+          retention-days: 30
+
+  # ------------------------------------------------------------------ Stage 5: container security
+  container:
+    name: Build + Trivy image scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Trivy
+        run: |
+          curl -sSfL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" | tar xz -C /usr/local/bin trivy
+          trivy --version
+      - name: Build image
+        run: docker build --pull -t "$IMAGE" app
+      - name: Trivy config scan (Dockerfile, Kubernetes, Terraform misconfigurations)
+        run: |
+          mkdir -p reports
+          trivy config --skip-dirs security-tools/examples --skip-dirs policies/opa/tests/fixtures \
+            --ignorefile .trivyignore.yaml --severity HIGH,CRITICAL --exit-code 1 .
+      - name: Trivy filesystem SCA (Python dependencies)
+        run: trivy fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 app
+      - name: Trivy image report + SBOM
+        run: |
+          trivy image --format table --output reports/trivy-image.txt "$IMAGE"
+          trivy image --format json --output reports/trivy-image.json "$IMAGE"
+          trivy image --format cyclonedx --output reports/sbom.cdx.json "$IMAGE"
+      - name: Trivy image gate (fail on fixable CRITICAL)
+        run: trivy image --severity CRITICAL --ignore-unfixed --exit-code 1 "$IMAGE"
+      - name: Save image for DAST
+        run: docker save "$IMAGE" -o /tmp/image.tar
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: image
+          path: /tmp/image.tar
+          retention-days: 1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: trivy-report
+          path: reports/
+          retention-days: 30
+
+  # ------------------------------------------------------------------ Stage 6: DAST
+  dast:
+    name: DAST (OWASP ZAP baseline)
+    runs-on: ubuntu-latest
+    needs: container
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: image
+          path: /tmp
+      - name: Start app (hardened runtime flags)
+        run: |
+          docker load -i /tmp/image.tar
+          docker run -d --name app --read-only --tmpfs /tmp --cap-drop ALL \
+            --security-opt no-new-privileges -e DEMO_PASSWORD=ci-only -p 8080:8080 "$IMAGE"
+          for i in $(seq 1 30); do curl -fsS http://localhost:8080/healthz && break; sleep 1; done
+      - name: ZAP baseline scan (FAIL rules in security-tools/zap/rules.tsv break the build)
+        run: |
+          mkdir -p zap && cp security-tools/zap/rules.tsv zap/ && chmod -R 777 zap
+          docker run --rm --network host -v "$PWD/zap:/zap/wrk:rw" "$ZAP_IMAGE" \
+            zap-baseline.py -t http://localhost:8080 -c rules.tsv -I \
+            -r zap-baseline.html -J zap-baseline.json -w zap-baseline.md
+      - name: App logs
+        if: always()
+        run: docker logs app || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: zap-report
+          path: zap/
+          retention-days: 30
+
+  # ------------------------------------------------------------------ Gate
+  security-gate:
+    name: Security gate
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [terraform, tfsec, checkov, policy-and-config, secret-scan, sast, container, dast]
+    steps:
+      - name: Evaluate results
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          echo "## Security gate" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Stage | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "$RESULTS" | jq -r 'to_entries[] | "| \(.key) | \(.value.result) |"' >> "$GITHUB_STEP_SUMMARY"
+          failed=$(echo "$RESULTS" | jq -r '[to_entries[] | select(.value.result != "success")] | length')
+          if [ "$failed" -ne 0 ]; then
+            echo "::error::$failed security stage(s) did not pass - blocking merge"
+            exit 1
+          fi
+          echo "All security gates passed." >> "$GITHUB_STEP_SUMMARY"
