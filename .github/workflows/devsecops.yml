@@ -328,7 +328,7 @@ jobs:
           mkdir -p sarif
           tfsec terraform --no-color --soft-fail --format sarif --out sarif/tfsec.sarif
           trivy config --skip-dirs security-tools/examples --skip-dirs policies/opa/tests/fixtures \
-            --ignorefile .trivyignore.yaml --format sarif --output sarif/trivy-config.sarif .
+            --ignorefile .trivyignore.yaml --severity HIGH,CRITICAL --format sarif --output sarif/trivy-config.sarif .
       - name: Upload tfsec SARIF
         uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
